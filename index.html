@@ -1,0 +1,327 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>精神科職能治療師 核心知識與技能檢核表</title>
+    <style>
+        :root {
+            --primary-color: #2c3e50;
+            --secondary-color: #3498db;
+            --accent-color: #27ae60;
+            --bg-color: #f8f9fa;
+            --card-bg: #ffffff;
+            --text-color: #333333;
+            --border-color: #e2e8f0;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            line-height: 1.6;
+            margin: 0;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 30px;
+            padding: 20px;
+            background-color: var(--primary-color);
+            color: white;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+
+        h1 {
+            margin: 0 0 10px 0;
+            font-size: 1.8rem;
+        }
+
+        .tab-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            margin-bottom: 25px;
+        }
+
+        .tab-btn {
+            padding: 12px 24px;
+            font-size: 1rem;
+            font-weight: bold;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            background-color: #e0e0e0;
+            color: var(--primary-color);
+            transition: all 0.3s ease;
+        }
+
+        .tab-btn.active {
+            background-color: var(--secondary-color);
+            color: white;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.15);
+        }
+
+        .progress-card {
+            background: var(--card-bg);
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 25px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 15px;
+        }
+
+        .progress-bar-container {
+            flex: 1;
+            min-width: 250px;
+            background-color: #edf2f7;
+            height: 20px;
+            border-radius: 10px;
+            overflow: hidden;
+        }
+
+        .progress-bar {
+            height: 100%;
+            background-color: var(--accent-color);
+            width: 0%;
+            transition: width 0.3s ease;
+        }
+
+        .checklist-section {
+            display: none;
+        }
+
+        .checklist-section.active {
+            display: block;
+        }
+
+        .category-block {
+            background: var(--card-bg);
+            margin-bottom: 20px;
+            border-radius: 8px;
+            overflow: hidden;
+            border: 1px solid var(--border-color);
+            box-shadow: 0 2px 4px rgba(0,0,0,0.03);
+        }
+
+        .category-header {
+            background-color: #edf2f7;
+            padding: 12px 20px;
+            font-weight: bold;
+            font-size: 1.1rem;
+            color: var(--primary-color);
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .item-list {
+            padding: 10px 20px;
+        }
+
+        .item-row {
+            display: flex;
+            align-items: center;
+            padding: 10px 0;
+            border-bottom: 1px dashed var(--border-color);
+            cursor: pointer;
+        }
+
+        .item-row:last-child {
+            border-bottom: none;
+        }
+
+        .item-row:hover {
+            background-color: #f7fafc;
+        }
+
+        .item-row input[type="checkbox"] {
+            width: 18px;
+            height: 18px;
+            margin-right: 15px;
+            cursor: pointer;
+            accent-color: var(--accent-color);
+        }
+
+        .item-row label {
+            cursor: pointer;
+            flex: 1;
+            user-select: none;
+        }
+
+        .item-row.checked label {
+            text-decoration: line-through;
+            color: #a0aec0;
+        }
+
+        @media print {
+            .tab-buttons, .progress-card {
+                display: none;
+            }
+            .checklist-section {
+                display: block !important;
+                page-break-after: always;
+            }
+            body {
+                background-color: white;
+                padding: 0;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <header>
+        <h1>精神科職能治療師 專業學習與評估檢核表</h1>
+        <p style="margin:0; opacity: 0.9;">100 個核心知識 ＆ 100 個實務技能自評系統</p>
+    </header>
+
+    <div class="tab-buttons">
+        <button class="tab-btn active" onclick="switchTab('knowledge')">100 個核心知識</button>
+        <button class="tab-btn" onclick="switchTab('skills')">100 個核心技能</button>
+    </div>
+
+    <div class="progress-card">
+        <div>
+            <strong id="tab-title-display">100 個核心知識</strong> 進度：
+            <span id="progress-text">0 / 100 (0%)</span>
+        </div>
+        <div class="progress-bar-container">
+            <div class="progress-bar" id="progress-bar"></div>
+        </div>
+        <button onclick="resetCurrentTab()" style="padding: 6px 12px; background: #e53e3e; color: white; border: none; border-radius: 4px; cursor: pointer;">重置本頁進度</button>
+    </div>
+
+    <!-- 核心知識區塊 -->
+    <div id="knowledge-section" class="checklist-section active"></div>
+
+    <!-- 核心技能區塊 -->
+    <div id="skills-section" class="checklist-section"></div>
+</div>
+
+<script>
+    const knowledgeData = {"title": "精神科職能治療師 100 核心知識檢核表", "categories": ["一、精神病理學與診斷分類", "二、職能治療核心理論與參考架構", "三、心理社會評估工具與臨床推理", "四、團體治療與人際互動技巧", "五、職能媒介與個體介入策略", "六、社區復健、職業輔導與社會復歸", "七、倫理、法規、個案安全與跨專業合作", "八、實證醫學、數位創新與自我照顧"], "items": [{"id": "k1", "label": "1. 思覺失調症光譜陽性與陰性症狀辨識", "category": "一、精神病理學與診斷分類"}, {"id": "k2", "label": "2. 思覺失調症之認知功能障礙分析", "category": "一、精神病理學與診斷分類"}, {"id": "k3", "label": "3. 雙相情緒障礙症（躁期與鬱期）特徵", "category": "一、精神病理學與診斷分類"}, {"id": "k4", "label": "4. 重鬱症之臨床表現與職能干擾", "category": "一、精神病理學與診斷分類"}, {"id": "k5", "label": "5. 焦慮症候群（GAD、恐慌症、社交焦慮）表現", "category": "一、精神病理學與診斷分類"}, {"id": "k6", "label": "6. 強迫症（OCD）之強迫思維與行為剖析", "category": "一、精神病理學與診斷分類"}, {"id": "k7", "label": "7. 創傷及壓力源相關障礙（PTSD）行為辨識", "category": "一、精神病理學與診斷分類"}, {"id": "k8", "label": "8. 人格障礙症（B群與C群）臨床互動特徵", "category": "一、精神病理學與診斷分類"}, {"id": "k9", "label": "9. 物質使用及成癮障礙復健階段", "category": "一、精神病理學與診斷分類"}, {"id": "k10", "label": "10. 飲食障礙症之身體意象與價值扭曲", "category": "一、精神病理學與診斷分類"}, {"id": "k11", "label": "11. 神經發展障礙症（ASD/ADHD）成人表現", "category": "一、精神病理學與診斷分類"}, {"id": "k12", "label": "12. 神經認知障礙症（失智症）與 BPSD 處置", "category": "一、精神病理學與診斷分類"}, {"id": "k13", "label": "13. 病識感（Insight）等級臨床評估", "category": "一、精神病理學與診斷分類"}, {"id": "k14", "label": "14. 精神科藥物副作用（EPS/TD/靜坐不能）辨識", "category": "一、精神病理學與診斷分類"}, {"id": "k15", "label": "15. 代謝症候群與精神科藥物軀體健康管理", "category": "一、精神病理學與診斷分類"}, {"id": "k16", "label": "16. 人類職能模型（MOHO）意志、習慣與執行", "category": "二、職能治療核心理論與參考架構"}, {"id": "k17", "label": "17. 人-環境-職能模型（PEO / PEOP）應用", "category": "二、職能治療核心理論與參考架構"}, {"id": "k18", "label": "18. Claudia Allen 認知適應理論（CDM/ACL）", "category": "二、職能治療核心理論與參考架構"}, {"id": "k19", "label": "19. 心理動力參考架構與防衛機制", "category": "二、職能治療核心理論與參考架構"}, {"id": "k20", "label": "20. 認知行為參考架構（CBT）自動化想法調校", "category": "二、職能治療核心理論與參考架構"}, {"id": "k21", "label": "21. 辯證行為治療（DBT）情緒調節與痛苦耐受", "category": "二、職能治療核心理論與參考架構"}, {"id": "k22", "label": "22. 感覺統合與感覺加工理論在精神科應用", "category": "二、職能治療核心理論與參考架構"}, {"id": "k23", "label": "23. 發展參考架構與心理社會發展停滯", "category": "二、職能治療核心理論與參考架構"}, {"id": "k24", "label": "24. 復原模型（Recovery Model）核心理念與落實", "category": "二、職能治療核心理論與參考架構"}, {"id": "k25", "label": "25. 賦權理論（Empowerment Theory）與自我倡導", "category": "二、職能治療核心理論與參考架構"}, {"id": "k26", "label": "26. 創傷知情照護（TIC）五大原則", "category": "二、職能治療核心理論與參考架構"}, {"id": "k27", "label": "27. 職能正義、職能剝奪與職能異化辨識", "category": "二、職能治療核心理論與參考架構"}, {"id": "k28", "label": "28. 健康信念模型（HBM）於衛教之應用", "category": "二、職能治療核心理論與參考架構"}, {"id": "k29", "label": "29. 職能歷史檔案（Occupational Profile）建立", "category": "三、心理社會評估工具與臨床推理"}, {"id": "k30", "label": "30. Allen 認知階層皮革穿線測驗（ACLS）施測", "category": "三、心理社會評估工具與臨床推理"}, {"id": "k31", "label": "31. MOHO 評估工具（OSA / COPM）應用", "category": "三、心理社會評估工具與臨床推理"}, {"id": "k32", "label": "32. Volitional Questionnaire (VQ) 觀察評估", "category": "三、心理社會評估工具與臨床推理"}, {"id": "k33", "label": "33. 角色檢核表與興趣檢核表盤點", "category": "三、心理社會評估工具與臨床推理"}, {"id": "k34", "label": "34. 時間分析表與生活作息平衡評估", "category": "三、心理社會評估工具與臨床推理"}, {"id": "k35", "label": "35. 精神科生活功能評估（LISP / AAP）", "category": "三、心理社會評估工具與臨床推理"}, {"id": "k36", "label": "36. 社會功能量表（SFS）評估人際互動", "category": "三、心理社會評估工具與臨床推理"}, {"id": "k37", "label": "37. 精神科職業輔導評估工具（WRI / CWC）", "category": "三、心理社會評估工具與臨床推理"}, {"id": "k38", "label": "38. 成人/青少年感覺剖量表施測與分析", "category": "三、心理社會評估工具與臨床推理"}, {"id": "k39", "label": "39. 精神狀態檢查（MSE）臨床觀察與記錄", "category": "三、心理社會評估工具與臨床推理"}, {"id": "k40", "label": "40. 臨床風險評估（自傷/暴力/走失）", "category": "三、心理社會評估工具與臨床推理"}, {"id": "k41", "label": "41. 精神科臨床推理（敘事/科學/務實推理）", "category": "三、心理社會評估工具與臨床推理"}, {"id": "k42", "label": "42. ICF 架構於精神科個案之分類應用", "category": "三、心理社會評估工具與臨床推理"}, {"id": "k43", "label": "43. Yalom 團體心理治療核心要素理解", "category": "四、團體治療與人際互動技巧"}, {"id": "k44", "label": "44. Mosey 發展性團體層級評估與設計", "category": "四、團體治療與人際互動技巧"}, {"id": "k45", "label": "45. 團體發展階段（形成至結束期）掌握", "category": "四、團體治療與人際互動技巧"}, {"id": "k46", "label": "46. 團體帶領者角色風格（指示/引導/諮詢）切換", "category": "四、團體治療與人際互動技巧"}, {"id": "k47", "label": "47. 治療性使用自我與臨床界線維護", "category": "四、團體治療與人際互動技巧"}, {"id": "k48", "label": "48. 移情與反移情現象察覺與處理", "category": "四、團體治療與人際互動技巧"}, {"id": "k49", "label": "49. 非暴力溝通（NVC）四要素運用", "category": "四、團體治療與人際互動技巧"}, {"id": "k50", "label": "50. 動機式晤談法（MI）促進行為改變", "category": "四、團體治療與人際互動技巧"}, {"id": "k51", "label": "51. 情緒去階梯化（De-escalation）技巧", "category": "四、團體治療與人際互動技巧"}, {"id": "k52", "label": "52. 社交技巧訓練（SST）教案設計與演練", "category": "四、團體治療與人際互動技巧"}, {"id": "k53", "label": "53. 面對操縱或依賴行為之界線設立", "category": "四、團體治療與人際互動技巧"}, {"id": "k54", "label": "54. 團體規範建立與保密安全氛圍塑造", "category": "四、團體治療與人際互動技巧"}, {"id": "k55", "label": "55. 處理困難團體行為（壟斷/沉默/離題）", "category": "四、團體治療與人際互動技巧"}, {"id": "k56", "label": "56. 表達性藝術媒介（繪畫/寫作/音樂）引導", "category": "四、團體治療與人際互動技巧"}, {"id": "k57", "label": "57. 團體回顧與生活經驗連結引導", "category": "四、團體治療與人際互動技巧"}, {"id": "k58", "label": "58. 生活作息重組與職能平衡建立", "category": "五、職能媒介與個體介入策略"}, {"id": "k59", "label": "59. ADL / IADL 社區獨立生活訓練", "category": "五、職能媒介與個體介入策略"}, {"id": "k60", "label": "60. 認知矯治（Cognitive Remediation）訓練", "category": "五、職能媒介與個體介入策略"}, {"id": "k61", "label": "61. 認知補償策略與環境改造設定", "category": "五、職能媒介與個體介入策略"}, {"id": "k62", "label": "62. 情緒調節策略與應對箱（Coping Kit）製作", "category": "五、職能媒介與個體介入策略"}, {"id": "k63", "label": "63. 壓力管理、正念與肌肉鬆弛訓練", "category": "五、職能媒介與個體介入策略"}, {"id": "k64", "label": "64. 睡眠衛生（Sleep Hygiene）衛教與改善", "category": "五、職能媒介與個體介入策略"}, {"id": "k65", "label": "65. 感覺策略與感覺餐（Sensory Diet）規劃", "category": "五、職能媒介與個體介入策略"}, {"id": "k66", "label": "66. 手作與工藝活動之心理與結構分析", "category": "五、職能媒介與個體介入策略"}, {"id": "k67", "label": "67. 園藝治療活動設計與執行", "category": "五、職能媒介與個體介入策略"}, {"id": "k68", "label": "68. 烹飪與飲食介入個案活動規劃", "category": "五、職能媒介與個體介入策略"}, {"id": "k69", "label": "69. 自我概念與尊嚴重塑體驗設計", "category": "五、職能媒介與個體介入策略"}, {"id": "k70", "label": "70. 疾病自我管理與復發前兆計畫", "category": "五、職能媒介與個體介入策略"}, {"id": "k71", "label": "71. 社區復健中心與康復之家運作模式", "category": "六、社區復健、職業輔導與社會復歸"}, {"id": "k72", "label": "72. 會所模式（Clubhouse Model）工作日運作", "category": "六、社區復健、職業輔導與社會復歸"}, {"id": "k73", "label": "73. 支持性就業（IPS 模式）執行", "category": "六、社區復健、職業輔導與社會復歸"}, {"id": "k74", "label": "74. 庇護性就業與過渡性工作安排", "category": "六、社區復健、職業輔導與社會復歸"}, {"id": "k75", "label": "75. 職業輔導評估與體能性工作能力（FCE）", "category": "六、社區復健、職業輔導與社會復歸"}, {"id": "k76", "label": "76. 精神障礙個案之職務再設計", "category": "六、社區復健、職業輔導與社會復歸"}, {"id": "k77", "label": "77. 工作適應與工作耐力訓練（Work Hardening）", "category": "六、社區復健、職業輔導與社會復歸"}, {"id": "k78", "label": "78. 社區獨立生活與資源整合訓練", "category": "六、社區復健、職業輔導與社會復歸"}, {"id": "k79", "label": "79. 同儕支持者（Peer Support）與網絡建立", "category": "六、社區復健、職業輔導與社會復歸"}, {"id": "k80", "label": "80. 去機構化與機構化症候群預防", "category": "六、社區復健、職業輔導與社會復歸"}, {"id": "81", "label": "81. 對抗自我污名化與社會去標籤倡導", "category": "六、社區復健、職業輔導與社會復歸"}, {"id": "k82", "label": "82. 家屬支持衛教與照顧者負擔舒緩", "category": "六、社區復健、職業輔導與社會復歸"}, {"id": "k83", "label": "83. 密集式個案管理（ICM）與 ACT 模式", "category": "六、社區復健、職業輔導與社會復歸"}, {"id": "k84", "label": "84. 精神衛生法規（強制住院/社區治療）", "category": "七、倫理、法規、個案安全與跨專業合作"}, {"id": "k85", "label": "85. 精神科緊急狀況（暴力/逃跑/自傷）處置", "category": "七、倫理、法規、個案安全與跨專業合作"}, {"id": "k86", "label": "86. 身體約束與隔離之倫理與安全規範", "category": "七、倫理、法規、個案安全與跨專業合作"}, {"id": "k87", "label": "87. 知情同意與個案自主權維護", "category": "七、倫理、法規、個案安全與跨專業合作"}, {"id": "k88", "label": "88. 醫療隱私權與預警責任之平衡", "category": "七、倫理、法規、個案安全與跨專業合作"}, {"id": "k89", "label": "89. 跨專業團隊（醫師/護理/心理/社工）合作", "category": "七、倫理、法規、個案安全與跨專業合作"}, {"id": "k90", "label": "90. 醫學倫理四大原則在精神科之落實", "category": "七、倫理、法規、個案安全與跨專業合作"}, {"id": "k91", "label": "91. SOAP 精神科病歷與紀錄寫作規範", "category": "七、倫理、法規、個案安全與跨專業合作"}, {"id": "k92", "label": "92. 文化能力與多元背景包容溝通", "category": "七、倫理、法規、個案安全與跨專業合作"}, {"id": "k93", "label": "93. 實證精神科職能治療（EBP）文獻應用", "category": "八、實證醫學、數位創新與自我照顧"}, {"id": "k94", "label": "94. 運用 Rubrics 臨床教學與實習生督導", "category": "八、實證醫學、數位創新與自我照顧"}, {"id": "k95", "label": "95. 輔助科技與生成式 AI 在復健教材之應用", "category": "八、實證醫學、數位創新與自我照顧"}, {"id": "k96", "label": "96. 替代性創傷（Vicarious Trauma）察覺與預防", "category": "八、實證醫學、數位創新與自我照顧"}, {"id": "k97", "label": "97. 同理心疲勞與職業倦怠（Burnout）調適", "category": "八、實證醫學、數位創新與自我照顧"}, {"id": "k98", "label": "98. 定期參與專業與同儕督導（Supervision）", "category": "八、實證醫學、數位創新與自我照顧"}, {"id": "k99", "label": "99. 治療師個人職能平衡與自我照顧落實", "category": "八、實證醫學、數位創新與自我照顧"}, {"id": "k100", "label": "100. 精神健康促進與職能治療專業價值倡導", "category": "八、實證醫學、數位創新與自我照顧"}]};
+    const skillsData = {"title": "精神科職能治療師 100 核心技能檢核表", "categories": ["一、精神狀態觀察與臨床評估技能", "二、治療性溝通與個別晤談技能", "三、團體治療帶領與運作技能", "四、日常生活與認知訓練技能", "五、職業復健與社區輔導技能", "六、職能活動分析與媒介應用技能", "七、病歷寫作、跨專業與法規安全技能", "八、實證研究、數位創新與自我照顧技能"], "items": [{"id": "s1", "label": "1. 精神狀態檢查（MSE）觀察記錄", "category": "一、精神狀態觀察與臨床評估技能"}, {"id": "s2", "label": "2. 病識感（Insight）層級辨識與評估", "category": "一、精神狀態觀察與臨床評估技能"}, {"id": "s3", "label": "3. 精神科藥物副作用（EPS/AIMS）評估記錄", "category": "一、精神狀態觀察與臨床評估技能"}, {"id": "s4", "label": "4. 自傷與自殺風險評估與敏銳觀察", "category": "一、精神狀態觀察與臨床評估技能"}, {"id": "s5", "label": "5. 暴力與激躁衝動前兆評估", "category": "一、精神狀態觀察與臨床評估技能"}, {"id": "s6", "label": "6. Allen 認知階層皮革穿線（ACLS）標準化施測", "category": "一、精神狀態觀察與臨床評估技能"}, {"id": "s7", "label": "7. Allen 診斷模組（ADM）手作評估驗證", "category": "一、精神狀態觀察與臨床評估技能"}, {"id": "s8", "label": "8. MOHO 意志問卷（VQ）情境觀察評估", "category": "一、精神狀態觀察與臨床評估技能"}, {"id": "s9", "label": "9. 加拿大職能表現測量（COPM）晤談施測", "category": "一、精神狀態觀察與臨床評估技能"}, {"id": "s10", "label": "10. 角色檢核表與興趣檢核表盤點引導", "category": "一、精神狀態觀察與臨床評估技能"}, {"id": "s11", "label": "11. 時間分析（Time Use）作息與職能平衡評估", "category": "一、精神狀態觀察與臨床評估技能"}, {"id": "s12", "label": "12. 精神科 ADL/IADL 社區獨立生活評估", "category": "一、精神狀態觀察與臨床評估技能"}, {"id": "s13", "label": "13. 成人/青少年感覺剖量表（Sensory Profile）分析", "category": "一、精神狀態觀察與臨床評估技能"}, {"id": "s14", "label": "14. 社會功能量表（SFS）人際能力施測", "category": "一、精神狀態觀察與臨床評估技能"}, {"id": "s15", "label": "15. 工作行為與職業適性觀察評估", "category": "一、精神狀態觀察與臨床評估技能"}, {"id": "s16", "label": "16. 治療性使用自我（Therapeutic Use of Self）調適", "category": "二、治療性溝通與個別晤談技能"}, {"id": "s17", "label": "17. 建立同理心與傾聽（Active Listening）回應", "category": "二、治療性溝通與個別晤談技能"}, {"id": "s18", "label": "18. 動機式晤談（MI）引導改變行為", "category": "二、治療性溝通與個別晤談技能"}, {"id": "s19", "label": "19. 情緒去階梯化（De-escalation）口語應對", "category": "二、治療性溝通與個別晤談技能"}, {"id": "s20", "label": "20. 非暴力溝通（NVC）四要素引導個案", "category": "二、治療性溝通與個別晤談技能"}, {"id": "s21", "label": "21. 臨床專業界線設立（Setting Boundaries）", "category": "二、治療性溝通與個別晤談技能"}, {"id": "s22", "label": "22. 移情與反移情察覺與臨床處理", "category": "二、治療性溝通與個別晤談技能"}, {"id": "s23", "label": "23. 現實導向與認可技巧（Validation / Orientation）", "category": "二、治療性溝通與個別晤談技能"}, {"id": "s24", "label": "24. 認知重塑（Cognitive Reframing）觀點引導", "category": "二、治療性溝通與個別晤談技能"}, {"id": "s25", "label": "25. 痛苦耐受（Distress Tolerance）技巧指導", "category": "二、治療性溝通與個別晤談技能"}, {"id": "s26", "label": "26. 家屬溝通、衛教與照顧諮詢", "category": "二、治療性溝通與個別晤談技能"}, {"id": "s27", "label": "27. 個案自主選擇與決策能力引導", "category": "二、治療性溝通與個別晤談技能"}, {"id": "s28", "label": "28. 危機介入與情緒安全支持提供", "category": "二、治療性溝通與個別晤談技能"}, {"id": "s29", "label": "29. 團體教案與契合度精準設計", "category": "三、團體治療帶領與運作技能"}, {"id": "s30", "label": "30. 團體規範（Group Norms）建立與安全維護", "category": "三、團體治療帶領與運作技能"}, {"id": "s31", "label": "31. 發展性團體（Mosey）層級帶領", "category": "三、團體治療帶領與運作技能"}, {"id": "s32", "label": "32. 團體破冰暖身（Ice-breaker）破除防備", "category": "三、團體治療帶領與運作技能"}, {"id": "s33", "label": "33. 巧妙處理團體壟斷者（Monopolizer）發言", "category": "三、團體治療帶領與運作技能"}, {"id": "s34", "label": "34. 無壓力引導沉默成員（Silent Member）參與", "category": "三、團體治療帶領與運作技能"}, {"id": "s35", "label": "35. 團體衝突化解（Conflict Resolution）居中協調", "category": "三、團體治療帶領與運作技能"}, {"id": "s36", "label": "36. 社交技巧訓練（SST）角色扮演與回饋", "category": "三、團體治療帶領與運作技能"}, {"id": "s37", "label": "37. 表達性藝術（繪畫/音樂/手作）團體引導", "category": "三、團體治療帶領與運作技能"}, {"id": "s38", "label": "38. 正念與漸進式肌肉鬆弛團體帶領", "category": "三、團體治療帶領與運作技能"}, {"id": "s39", "label": "39. 生活作息（Routine）檢討團體帶領", "category": "三、團體治療帶領與運作技能"}, {"id": "s40", "label": "40. 團體回顧（Processing）感受引導", "category": "三、團體治療帶領與運作技能"}, {"id": "s41", "label": "41. 團體經驗遷移（Generalization）至生活", "category": "三、團體治療帶領與運作技能"}, {"id": "s42", "label": "42. 團體結束與離別（Termination）焦慮處置", "category": "三、團體治療帶領與運作技能"}, {"id": "s43", "label": "43. 生活作息重組（Lifestyle Redesign）規劃", "category": "四、日常生活與認知訓練技能"}, {"id": "s44", "label": "44. 服藥自我管理訓練與輔具設計", "category": "四、日常生活與認知訓練技能"}, {"id": "s45", "label": "45. 理財、預算編列與採買購物訓練", "category": "四、日常生活與認知訓練技能"}, {"id": "s46", "label": "46. 烹飪、備料與餐飲衛生管理訓練", "category": "四、日常生活與認知訓練技能"}, {"id": "s47", "label": "47. 大眾交通工具搭乘實地訓練", "category": "四、日常生活與認知訓練技能"}, {"id": "s48", "label": "48. 個人衛生與外觀儀容整理輔導", "category": "四、日常生活與認知訓練技能"}, {"id": "s49", "label": "49. 電腦化認知矯治（Memory/Attention）訓練", "category": "四、日常生活與認知訓練技能"}, {"id": "s50", "label": "50. 外部認知補償環境與提示板建置", "category": "四、日常生活與認知訓練技能"}, {"id": "s51", "label": "51. 執行功能（Executive Function）問題解決訓練", "category": "四、日常生活與認知訓練技能"}, {"id": "s52", "label": "52. 睡眠衛生（Sleep Hygiene）習慣衛教與調整", "category": "四、日常生活與認知訓練技能"}, {"id": "s53", "label": "53. 感覺餐（Sensory Diet）執行與本體覺輸入", "category": "四、日常生活與認知訓練技能"}, {"id": "s54", "label": "54. 個人情緒應對箱（Coping Kit）製作", "category": "四、日常生活與認知訓練技能"}, {"id": "s55", "label": "55. 復發前兆（Relapse Prevention）清單擬定", "category": "四、日常生活與認知訓練技能"}, {"id": "s56", "label": "56. 緊急求助管道與通訊設備使用訓練", "category": "四、日常生活與認知訓練技能"}, {"id": "s57", "label": "57. 個案工作能力、耐力與品質分析", "category": "五、職業復健與社區輔導技能"}, {"id": "s58", "label": "58. 工作適應與工作耐力漸進訓練", "category": "五、職業復健與社區輔導技能"}, {"id": "s59", "label": "59. 求職技巧、履歷寫作與模擬面試指導", "category": "五、職業復健與社區輔導技能"}, {"id": "s60", "label": "60. 支持性就業（IPS 模式）職場高密度支持", "category": "五、職業復健與社區輔導技能"}, {"id": "s61", "label": "61. 精神障礙個案之職務再設計規劃", "category": "五、職業復健與社區輔導技能"}, {"id": "s62", "label": "62. 職場自然支持者（Natural Support）衛教溝通", "category": "五、職業復健與社區輔導技能"}, {"id": "s63", "label": "63. 庇護性工作隊代工產線拆解與管理", "category": "五、職業復健與社區輔導技能"}, {"id": "s64", "label": "64. 會所模式（Clubhouse）工作日平等運作", "category": "五、職業復健與社區輔導技能"}, {"id": "s65", "label": "65. 社區獨立生活（郵局/銀行/機關）實地演練", "category": "五、職業復健與社區輔導技能"}, {"id": "s66", "label": "66. 同儕支持者（Peer Support）機制建立引導", "category": "五、職業復健與社區輔導技能"}, {"id": "s67", "label": "67. 社區復健中心與衛政/社政資源整合", "category": "五、職業復健與社區輔導技能"}, {"id": "s68", "label": "68. 對抗自我污名化與正向身份重塑", "category": "五、職業復健與社區輔導技能"}, {"id": "s69", "label": "69. 急診/住院至社區之轉銜計畫（Transition）撰寫", "category": "五、職業復健與社區輔導技能"}, {"id": "s70", "label": "70. 雇主溝通、友善職場倡導與宣導", "category": "五、職業復健與社區輔導技能"}, {"id": "s71", "label": "71. 活動分析（Activity Analysis）需求精確拆解", "category": "六、職能活動分析與媒介應用技能"}, {"id": "s72", "label": "72. 活動分級（Grading）與適應調整（Adapting）", "category": "六、職能活動分析與媒介應用技能"}, {"id": "s73", "label": "73. 工藝媒介（皮雕/木工/編織）結構化應用", "category": "六、職能活動分析與媒介應用技能"}, {"id": "s74", "label": "74. 園藝治療播種、換盆與照護設計", "category": "六、職能活動分析與媒介應用技能"}, {"id": "s75", "label": "75. 烹飪媒介備料與團隊合作活動規劃", "category": "六、職能活動分析與媒介應用技能"}, {"id": "s76", "label": "76. 運動體適能、伸展與競賽活動帶領", "category": "六、職能活動分析與媒介應用技能"}, {"id": "s77", "label": "77. 桌上遊戲媒介應用（訓練衝動控制與社交）", "category": "六、職能活動分析與媒介應用技能"}, {"id": "s78", "label": "78. 音樂與打擊節奏活動引導", "category": "六、職能活動分析與媒介應用技能"}, {"id": "s79", "label": "79. 戲劇與角色扮演情境探索", "category": "六、職能活動分析與媒介應用技能"}, {"id": "s80", "label": "80. 黏土與泥塑觸覺宣洩媒介應用", "category": "六、職能活動分析與媒介應用技能"}, {"id": "s81", "label": "81. 繪畫與曼陀羅（Mandala）專注引導", "category": "六、職能活動分析與媒介應用技能"}, {"id": "s82", "label": "82. 數位科技與生活管理 App 訓練融入", "category": "六、職能活動分析與媒介應用技能"}, {"id": "s83", "label": "83. 活動空間安全評估與危險物品管控", "category": "六、職能活動分析與媒介應用技能"}, {"id": "s84", "label": "84. SOAP 格式病歷與紀錄精準寫作", "category": "七、病歷寫作、跨專業與法規安全技能"}, {"id": "s85", "label": "85. 精神科職能評估報告完整撰寫", "category": "七、病歷寫作、跨專業與法規安全技能"}, {"id": "s86", "label": "86. 跨專業團隊會議（MDT）復健發現簡報", "category": "七、病歷寫作、跨專業與法規安全技能"}, {"id": "s87", "label": "87. 精神衛生法規（強制住院/社區治療）實務應對", "category": "七、病歷寫作、跨專業與法規安全技能"}, {"id": "s88", "label": "88. 身體約束與隔離安全監測與解封評估", "category": "七、病歷寫作、跨專業與法規安全技能"}, {"id": "s89", "label": "89. 臨床急救與緊急狀況（暴力/自傷/逃跑）處置", "category": "七、病歷寫作、跨專業與法規安全技能"}, {"id": "s90", "label": "90. 知情同意（Informed Consent）說明與溝通", "category": "七、病歷寫作、跨專業與法規安全技能"}, {"id": "s91", "label": "91. 醫療隱私保護與預警責任（Tarasoff）判斷", "category": "七、病歷寫作、跨專業與法規安全技能"}, {"id": "s92", "label": "92. 醫療品質改善指標記錄與評鑑準備", "category": "七、病歷寫作、跨專業與法規安全技能"}, {"id": "s93", "label": "93. 實證文獻（PubMed/OTseeker）檢索與評讀", "category": "八、實證研究、數位創新與自我照顧技能"}, {"id": "s94", "label": "94. 運用 Rubrics 臨床教學與實習生督導", "category": "八、實證研究、數位創新與自我照顧技能"}, {"id": "s95", "label": "95. 生成式 AI 輔助設計教材、衛教與表單", "category": "八、實證研究、數位創新與自我照顧技能"}, {"id": "s96", "label": "96. VR 虛擬實境社交/認知模擬應用", "category": "八、實證研究、數位創新與自我照顧技能"}, {"id": "s97", "label": "97. 替代性創傷與同理心疲勞自我察覺", "category": "八、實證研究、數位創新與自我照顧技能"}, {"id": "s98", "label": "98. 職業倦怠（Burnout）防護與自我照顧落實", "category": "八、實證研究、數位創新與自我照顧技能"}, {"id": "s99", "label": "99. 主動參與臨床督導（Supervision）研討", "category": "八、實證研究、數位創新與自我照顧技能"}, {"id": "s100", "label": "100. 心理健康促進與職能治療專業價值倡導", "category": "八、實證研究、數位創新與自我照顧技能"}]};
+
+    let currentTab = 'knowledge';
+
+    function renderChecklist(data, containerId) {
+        const container = document.getElementById(containerId);
+        container.innerHTML = '';
+
+        data.categories.forEach(cat => {
+            const block = document.createElement('div');
+            block.className = 'category-block';
+
+            const header = document.createElement('div');
+            header.className = 'category-header';
+            header.innerText = cat;
+            block.appendChild(header);
+
+            const itemList = document.createElement('div');
+            itemList.className = 'item-list';
+
+            const catItems = data.items.filter(item => item.category === cat);
+            catItems.forEach(item => {
+                const row = document.createElement('div');
+                row.className = 'item-row';
+                row.id = 'row-' + item.id;
+
+                const checkbox = document.createElement('input');
+                checkbox.type = 'checkbox';
+                checkbox.id = item.id;
+                checkbox.checked = localStorage.getItem(item.id) === 'true';
+
+                if (checkbox.checked) {
+                    row.classList.add('checked');
+                }
+
+                checkbox.addEventListener('change', (e) => {
+                    localStorage.setItem(item.id, e.target.checked);
+                    if (e.target.checked) {
+                        row.classList.add('checked');
+                    } else {
+                        row.classList.remove('checked');
+                    }
+                    updateProgress();
+                });
+
+                const label = document.createElement('label');
+                label.htmlFor = item.id;
+                label.innerText = item.label;
+
+                row.appendChild(checkbox);
+                row.appendChild(label);
+                itemList.appendChild(row);
+            });
+
+            block.appendChild(itemList);
+            container.appendChild(block);
+        });
+    }
+
+    function switchTab(tab) {
+        currentTab = tab;
+        document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
+        document.querySelectorAll('.checklist-section').forEach(sec => sec.classList.remove('active'));
+
+        if (tab === 'knowledge') {
+            document.querySelectorAll('.tab-btn')[0].classList.add('active');
+            document.getElementById('knowledge-section').classList.add('active');
+            document.getElementById('tab-title-display').innerText = '100 個核心知識';
+        } else {
+            document.querySelectorAll('.tab-btn')[1].classList.add('active');
+            document.getElementById('skills-section').classList.add('active');
+            document.getElementById('tab-title-display').innerText = '100 個核心技能';
+        }
+        updateProgress();
+    }
+
+    function updateProgress() {
+        const currentData = currentTab === 'knowledge' ? knowledgeData : skillsData;
+        let checkedCount = 0;
+        currentData.items.forEach(item => {
+            if (localStorage.getItem(item.id) === 'true') {
+                checkedCount++;
+            }
+        });
+        const total = currentData.items.length;
+        const percentage = Math.round((checkedCount / total) * 100);
+
+        document.getElementById('progress-text').innerText = `${checkedCount} / ${total} (${percentage}%)`;
+        document.getElementById('progress-bar').style.width = percentage + '%';
+    }
+
+    function resetCurrentTab() {
+        if (confirm('確定要重置當前頁面的勾選進度嗎？')) {
+            const currentData = currentTab === 'knowledge' ? knowledgeData : skillsData;
+            currentData.items.forEach(item => {
+                localStorage.removeItem(item.id);
+                const cb = document.getElementById(item.id);
+                if (cb) {
+                    cb.checked = false;
+                    document.getElementById('row-' + item.id).classList.remove('checked');
+                }
+            });
+            updateProgress();
+        }
+    }
+
+    // Initial render
+    renderChecklist(knowledgeData, 'knowledge-section');
+    renderChecklist(skillsData, 'skills-section');
+    updateProgress();
+</script>
+
+</body>
+</html>
